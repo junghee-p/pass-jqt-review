@@ -1,21 +1,14 @@
 """
-UK electricity market case study.
+UK electricity market case study: PASS scenario from Section 4 of the paper.
 
-Reproduces the PASS scenario from Section 4 of the paper:
-
-    PASS with budget = 4 SPs/day, epsilon = 2/8, and top-r = 2
+    budget = 4 SPs/day, epsilon = 2/8, top-r = 2
 
 The monitoring statistic is the top-r absolute-residual mean
 
     A_t = (1/r) * sum_{j=1}^{r} |e_t|_{(j)},
 
-where |e_t|_{(1)} >= ... >= |e_t|_{(r)} are the r largest absolute residuals at
-time t. The one-sided EWMA control chart signals when Z_t exceeds UCL.
-
-Predictions are computed on the fly with LWPR (locally weighted polynomial
-regression); there are no pre-computed prediction files involved. Because
-LWPR does a local fit at every query point, the script takes on the order of
-a minute to run on the test window used in the paper.
+where |e_t|_{(1)} >= ... >= |e_t|_{(r)} are the r largest absolute residuals
+at time t. The one-sided EWMA control chart signals when Z_t exceeds UCL.
 
 USAGE
 -----
@@ -44,7 +37,7 @@ N_SP_PER_DAY    = 48
 SEED            = 0
 
 BUDGET          = 4                   # SPs sampled per day under budget constraint
-EPSILON         = 1 / 4               # PASS exploration ratio
+EPSILON         = 2 / 8               # PASS exploration ratio
                                       # -> 1 exploration + 3 exploitation samples per day
 
 R_LARGEST       = BUDGET // 2         # = 2
