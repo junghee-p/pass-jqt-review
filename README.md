@@ -4,8 +4,7 @@ Reference implementation for the paper
 **"An Adaptive Sampling Framework for Detecting Localized Concept Drift under Label Scarcity"**
 (submitted to *Journal of Quality Technology*, manuscript ID UJQT-2025-0178).
 
-The repository provides a minimal, self-contained codebase that reproduces one
-replication of each of the two evaluation tracks:
+The repository reproduces:
 
 - a simulation experiment on the Branin benchmark function (Section 3);
 - a case study on the UK electricity market (Section 4).
