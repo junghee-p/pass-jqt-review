@@ -10,7 +10,6 @@ HOW TO SWITCH STRATEGIES
 ------------------------
 Edit the parameters in the "Experiment settings" block below. Each variant is
 characterized by:
-    strategy   in {'PASS', 'Random'}
     epsilon    in [0, 1] (share of the budget allocated to exploration)
     monitoring in {'variance', 'average'}
 """
@@ -31,7 +30,7 @@ from functions.experiments import experiments_with_model
 function         = 'branin_2d'          # name in functions.config.FUNCTIONS
 predictor_path   = 'Branin_predictor.pkl'
 
-strategy         = 'PASS'               # 'PASS' or 'Random'
+strategy         = 'PASS'               
 epsilon          = 0.5                  # 1.0 = pure random sampling
 monitoring_type  = 'variance'           # 'variance' or 'average'
 
