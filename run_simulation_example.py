@@ -110,9 +110,3 @@ detection_delay = run_length - DRIFT_INTRODUCTION
 print(f"\nRun length     : {run_length}")
 print(f"Detection delay: {detection_delay} steps after drift onset")
 
-
-#                 bandwidth=bandwidth, seed=s)
-#             run_lengths.append(rl)
-#         return float(np.mean(run_lengths))
-#
-# Bisect on `ucl_value` until eval_arl0(ucl_value) matches the target ARL0.
