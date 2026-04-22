@@ -19,12 +19,12 @@ from functions.drifting_functions import get_y_value
 def model_initialization(function, boundaries, n_init_sample, noise,
                          predictor_path, seed=0):
     """
-    Load the predictor from `predictor_path` and generate an in-control
-    reference sample (x_initial, y_initial) by uniform random sampling.
+    Load the predictor from `predictor_path` and generate an initial
+    sample (x_initial, y_initial) used for the predictor.
 
     The returned reference sample is used downstream to:
       (i)  estimate sigma_hat from the reference residuals, and
-      (ii) seed the available-pool at the start of Phase II.
+      (ii) seed the available-pool at the start.
     """
     rng = np.random.default_rng(seed)
     prediction_model = joblib.load(predictor_path)
@@ -43,10 +43,6 @@ def monitoring_initialization(mon, prediction_model, x_initial, y_initial,
                               n_init_sample, budget, UCL, seed=0):
     """
     Compute sigma_hat from the reference residuals and build the chart dict.
-
-    Uses all of (x_initial, y_initial) as-is; if the caller wants to apply a
-    sliding-window cap before initialization (matching the cap used later in
-    the Phase-II loop), the slicing should be done in the caller.
 
     Parameters
     ----------
