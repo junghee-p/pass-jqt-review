@@ -1,7 +1,7 @@
 """
 UK electricity market case study: PASS scenario from Section 4 of the paper.
 
-    budget = 4 SPs/day, epsilon = 2/8, top-r = 2
+    budget = 4 SPs/day, epsilon = 1/4, top-r = 2
 
 The monitoring statistic is the top-r absolute-residual mean
 
@@ -37,7 +37,7 @@ N_SP_PER_DAY    = 48
 SEED            = 0
 
 BUDGET          = 4                   # SPs sampled per day under budget constraint
-EPSILON         = 2 / 8               # PASS exploration ratio
+EPSILON         = 1 / 4               # PASS exploration ratio
                                       # -> 1 exploration + 3 exploitation samples per day
 
 R_LARGEST       = BUDGET // 2         # = 2
