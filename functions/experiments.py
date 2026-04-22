@@ -1,7 +1,7 @@
 """
-Run a single monitoring experiment: Phase II loop with PASS (or Random)
-sampling, followed by the EWMA chart (A_t top-r absolute-residual mean or
-V_t log-sample-variance). Returns the run length at which the chart signals.
+Run a single monitoring experiment: PASS (or Random) sampling, followed by
+the EWMA chart (A_t top-r absolute-residual mean or V_t log-sample-variance).
+Returns the run length at which the chart signals.
 """
 import numpy as np
 from functions.drifting_functions import get_y_value
@@ -76,9 +76,9 @@ def experiments_with_model(function, noise, boundaries, epsilon, budget, monitor
                            grid_res=20, lamb=0.2, n_init_sample=10000,
                            bandwidth=None, seed=None):
     """
-    Run one Phase-II experiment. Abrupt mean drift is introduced at
-    `drift_introduction`. The loop continues until the chart signals; the
-    returned run length is the total number of steps taken.
+    Run one experiment. Abrupt mean drift is introduced at 'drift_introduction`.
+    The loop continues until the chart signals;
+    the returned run length is the total number of steps taken.
     """
     rng = np.random.default_rng(int(seed))
 
@@ -95,7 +95,7 @@ def experiments_with_model(function, noise, boundaries, epsilon, budget, monitor
     chart_dic, detection_dic = monitoring_setting(monitoring_dic, lamb)
     last_zeroed_time = {}
 
-    # --- Phase-II loop ---
+    # --- running loop ---
     while True:
         run_length += 1
 
