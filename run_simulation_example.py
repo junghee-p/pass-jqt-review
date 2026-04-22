@@ -2,12 +2,6 @@
 Example: run a single PASS (or Random) monitoring experiment on Branin and
 report the detection delay.
 
-This script is a minimal demonstration of the PASS workflow used for the
-simulation study. The full grid (all test functions, drift magnitudes and
-ratios, hundreds of replications, plus ARL0 calibration by bisection) is
-produced by a SLURM array job that loops over this same core routine; that
-orchestration is omitted here for clarity.
-
 USAGE
 -----
     python run_simulation_example.py
@@ -19,10 +13,6 @@ characterized by:
     strategy   in {'PASS', 'Random'}
     epsilon    in [0, 1] (share of the budget allocated to exploration)
     monitoring in {'variance', 'average'}
-
-The two configurations used in the paper are:
-    PASS  : strategy='PASS',   epsilon=0.5, monitoring='variance'
-    Random: strategy='Random', epsilon=1.0, monitoring='variance'
 """
 import sys
 sys.path.insert(0, '.')
@@ -58,7 +48,7 @@ seed             = 0
 # For any other (function, strategy, epsilon, monitoring) cell, run an ARL0
 # calibration loop: simulate in-control (drift_magnitudes = 0), bisect on the
 # UCL, and stop once the empirical ARL0 over 200 replications equals 200
-# within tolerance. See the NOTE at the bottom of this script for the sketch.
+# within tolerance.
 UCL = 0.316526
 
 
@@ -88,7 +78,6 @@ monitoring_dic, prediction_model, sigma_hat = monitoring_initialization(
 print(f"  sigma_hat = {sigma_hat:.4f} | UCL = {UCL}")
 
 
-# Truncate the reference sample to the sliding-window length used in Phase II.
 # The first n_init points were used to fit `prediction_model`; from here on
 # only the most recent SLIDING_WINDOW_LEN points seed the monitoring pool.
 SLIDING_WINDOW_LEN = min(2000, n_init)
@@ -97,7 +86,7 @@ y_initial = y_initial[-SLIDING_WINDOW_LEN:]
 
 
 # =============================================================================
-# 3. Run one Phase-II experiment
+# 3. Run experiment
 # =============================================================================
 # Drift is introduced at step DRIFT_INTRODUCTION. The loop inside
 # `experiments_with_model` stops as soon as the chart signals; the returned
@@ -122,24 +111,6 @@ print(f"\nRun length     : {run_length}")
 print(f"Detection delay: {detection_delay} steps after drift onset")
 
 
-# =============================================================================
-# NOTE on ARL0 calibration
-# =============================================================================
-# To calibrate a fresh UCL for a new (function, strategy, epsilon, monitoring)
-# cell, loop the in-control experiment (drift_magnitudes = 0) under candidate
-# UCL values and use bisection to hit ARL0 = 200 (+/- tolerance):
-#
-#     def eval_arl0(ucl_value):
-#         md, pm, sig = monitoring_initialization(
-#             monitoring_type, pm, x_initial, y_initial,
-#             n_init, BUDGET, UCL=ucl_value)
-#         run_lengths = []
-#         for s in range(200):
-#             rl, _ = experiments_with_model(
-#                 function, noise, boundaries, epsilon, BUDGET, md,
-#                 pm, x_initial, y_initial,
-#                 drift_introduction=0, drift_magnitudes=0, drift_ratio=0,
-#                 grid_res=grid_res, n_init_sample=min(2000, n_init),
 #                 bandwidth=bandwidth, seed=s)
 #             run_lengths.append(rl)
 #         return float(np.mean(run_lengths))
